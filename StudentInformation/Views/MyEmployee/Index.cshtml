@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<div id="test"></div>
+
+
+    <input type="text" value="" name="ProductName" id="ProductName" />
+    <input type="text" value="" name="ProductName" id="ProductDescription" />
+    <input type="text" name="BirthDate" id="BirthDate"/>
+    <input type="button" value="save"/ id="save">
+    <script src="~/Scripts/jquery-ui.js"></script>
+
+<script>
+    
+
+    function AddData() {
+
+        var obj = {
+            productName: $("#ProductName").val(),
+            productDescription: $("#ProductDescription").val()
+
+    }
+        $.ajax({
+            type: "POST",
+            url: "/api/product/addProduct",
+            data: JSON.stringify(obj),
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                alert("you have added data")
+            },
+            error: function () {
+                alert("Error occured!!")
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+
+        $('#BirthDate').datepicker({
+            dateFormat: "dd/M/yy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-60:+0"
+        });
+
+
+        var myData = 1;
+        $.ajax({
+            type: "GET",
+            url: "/api/product/getProduct?id="+ myData,
+            dataType: "json",  
+            success: function (data) {
+                var myHtml =""
+                $.each(data, function (key, idata) {
+                    myHtml += "<div>" + idata.ProductName +"</div>";
+
+                })
+                //document.getElementById("test").innerHTML = myHtml;
+                $("#test").html(myHtml);
+            },
+            error: function () {
+                alert("Error occured!!")
+            }
+        });
+
+    });
+
+    $("#save").click(function () {
+        AddData();
+    })
+</script>
+
