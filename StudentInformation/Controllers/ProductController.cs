@@ -35,7 +35,7 @@ namespace StudentInformation.Controllers
             {
                 var resp = new HttpResponseMessage(HttpStatusCode.NotFound)
                 {
-                    Content = new StringContent(string.Format("No product with ID = {0}", id)),
+                    Content = new StringContent(string.Format("No product with ID is = {0}", id)),
                     ReasonPhrase = "Product ID Not Found"
                 };
                 throw new HttpResponseException(resp);
